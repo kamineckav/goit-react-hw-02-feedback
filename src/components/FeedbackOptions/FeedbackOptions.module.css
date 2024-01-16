@@ -16,5 +16,9 @@
 }
 
 .feedback-btn.bad {
-  background-color: #d9534f; 
+  background-color: #d9534f;
+}
+
+.clicked {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
