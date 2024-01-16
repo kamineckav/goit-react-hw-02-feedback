@@ -1,0 +1,24 @@
+.statistics {
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+  max-width: 300px;
+  text-align: left;
+}
+
+.total {
+  font-size: 20px;
+  font-weight: bold;
+  color: #004080;
+}
+
+.feedback-type {
+  font-size: 16px;
+}
+
+.positive {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: bold;
+}
