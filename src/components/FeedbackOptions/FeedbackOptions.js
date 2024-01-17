@@ -1,38 +1,53 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import styles from './FeedbackOptions.module.css';
 import PropTypes from 'prop-types';
 
-const FeedbackOptions = ({ options, onLeaveFeedback }) => {
-  const [clickedButton, setClickedButton] = useState(null);
+class FeedbackOptions extends Component {
+  constructor(props) {
+    super(props);
 
-  const handleMouseDown = (option) => {
-    setClickedButton(option);
+    this.state = {
+      clickedButton: null,
+    };
+  }
+
+  handleMouseDown = option => {
+    this.setState({ clickedButton: option });
   };
 
-  const handleMouseUp = (option) => {
-    setClickedButton(null);
-    onLeaveFeedback(option);
+  handleMouseUp = option => {
+    this.setState({ clickedButton: null });
+    this.props.onLeaveFeedback(option);
   };
 
-  return (
-    <div>
-      {options.map((option) => (
-        <button
-          key={option}
-          type="button"
-          className={`${styles['feedback-btn']} ${styles[option]} ${
-            clickedButton === option ? styles.clicked : ''
-          }`}
-          onMouseDown={() => handleMouseDown(option)}
-          onMouseUp={() => handleMouseUp(option)}
-          onMouseLeave={() => setClickedButton(null)} // Додано обробник події при відведенні миші
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  );
-};
+  handleMouseLeave = () => {
+    this.setState({ clickedButton: null });
+  };
+
+  render() {
+    const { options } = this.props;
+    const { clickedButton } = this.state;
+
+    return (
+      <div>
+        {options.map(option => (
+          <button
+            key={option}
+            type="button"
+            className={`${styles['feedback-btn']} ${styles[option]} ${
+              clickedButton === option ? styles.clicked : ''
+            }`}
+            onMouseDown={() => this.handleMouseDown(option)}
+            onMouseUp={() => this.handleMouseUp(option)}
+            onMouseLeave={this.handleMouseLeave}
+          >
+            {option}
+          </button>
+        ))}
+      </div>
+    );
+  }
+}
 
 FeedbackOptions.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,

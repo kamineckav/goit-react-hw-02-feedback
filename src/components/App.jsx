@@ -1,51 +1,57 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import Statistics from '../components/Statistics/Statistics';
 import FeedbackOptions from '../components/FeedbackOptions/FeedbackOptions';
 import Section from '../components/Section/Section';
 import Notification from '../components/Notification/Notification';
 import styles from './App.module.css';
-import '../index.css'
+import '../index.css';
 
-const App = () => {
-  const [state, setState] = useState({
+class App extends Component {
+  state = {
     good: 0,
     neutral: 0,
-    bad: 0
-  });
-
-  const [showNotification, setShowNotification] = useState(true);
-
-  const onLeaveFeedback = (type) => {
-    setState((prevState) => ({ ...prevState, [type]: prevState[type] + 1 }));
-    setShowNotification(false);
+    bad: 0,
+    showNotification: true,
   };
 
-  return (
-    <div className={styles.container}>
-      <Section title="Leave Feedback">
-        <FeedbackOptions options={['good', 'neutral', 'bad']} onLeaveFeedback={onLeaveFeedback} />
-      </Section>
+  onLeaveFeedback = type => {
+    this.setState(prevState => ({
+      ...prevState,
+      [type]: prevState[type] + 1,
+      showNotification: false,
+    }));
+  };
 
-      <Section title="Statistics">
-        {state.good + state.neutral + state.bad > 0 ? (
-          <Statistics
-            good={state.good}
-            neutral={state.neutral}
-            bad={state.bad}
-            total={state.good + state.neutral + state.bad}
-            positivePercentage={
-              state.good > 0
-                ? Math.round((state.good / (state.good + state.neutral + state.bad)) * 100)
-                : 0
-            }
+  render() {
+    const { good, neutral, bad, showNotification } = this.state;
+
+    return (
+      <div className={styles.container}>
+        <Section title="Leave Feedback">
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.onLeaveFeedback}
           />
-        ) : (
-          showNotification && <Notification message="There is no feedback" />
-        )}
-      </Section>
-    </div>
-  );
-};
+        </Section>
+
+        <Section title="Statistics">
+          {good + neutral + bad > 0 ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={good + neutral + bad}
+              positivePercentage={
+                good > 0 ? Math.round((good / (good + neutral + bad)) * 100) : 0
+              }
+            />
+          ) : (
+            showNotification && <Notification message="There is no feedback" />
+          )}
+        </Section>
+      </div>
+    );
+  }
+}
 
 export default App;
-

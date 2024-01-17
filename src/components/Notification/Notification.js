@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styles from './Notification.module.css';
 
-const Notification = ({ message }) => (
-  <p className={styles.notification}>{message}</p>
-);
+class Notification extends Component {
+  render() {
+    const { message } = this.props;
+
+    return <p className={styles.notification}>{message}</p>;
+  }
+}
 
 export default Notification;
