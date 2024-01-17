@@ -23,7 +23,7 @@ class App extends Component {
   };
 
   render() {
-    const { good, neutral, bad, showNotification } = this.state;
+    const { good, neutral, bad } = this.state;
 
     return (
       <div className={styles.container}>
