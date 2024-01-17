@@ -46,7 +46,7 @@ class App extends Component {
               }
             />
           ) : (
-            showNotification && <Notification message="There is no feedback" />
+            <Notification message="There is no feedback" />
           )}
         </Section>
       </div>
